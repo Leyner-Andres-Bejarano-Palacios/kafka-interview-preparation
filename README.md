@@ -61,3 +61,18 @@ cluster to other datacenters
 <details><summary><b>Source</b></summary>
 kafka the definitive guide 1st Edition Pag 7
 </details>
+
+### Theorical Question 3
+
+Do you know the config parametes logs.dirs and num.recovery.threads.per.data.dir ?
+
+<details><summary><b>Answer</b></summary>
+
+![Image](img/logs_dirs_num_recovery_threads_per_data_dir.png "logs_dirs_num_recovery_threads_per_data_dir")
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 7
+</details>
+
