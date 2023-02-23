@@ -76,3 +76,146 @@ Do you know the config parametes logs.dirs and num.recovery.threads.per.data.dir
 kafka the definitive guide 1st Edition Pag 7
 </details>
 
+### Theorical Question 4
+
+Do you understand why we need a smaller size of the messages ?
+
+<details><summary><b>Answer</b></summary>
+
+The Kafka broker limits the maximum size of a message that can be produced, con‐
+figured by the message.max.bytes parameter, which defaults to 1000000, or 1 MB. A
+producer that tries to send a message larger than this will receive an error back from
+the broker, and the message will not be accepted. As with all byte sizes specified on
+the broker, this configuration deals with compressed message size, which means that
+producers can send messages that are much larger than this value uncompressed,
+provided they compress to under the configured message.max.bytes size.
+
+There are noticeable performance impacts from increasing the allowable message
+size. Larger messages will mean that the broker threads that deal with processing net‐
+work connections and requests will be working longer on each request. Larger mes‐
+sages also increase the size of disk writes, which will impact I/O throughput.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 28
+</details>
+
+### Theorical Question 5
+
+Do you know why we include the key with the topic we are writting to ?
+
+<details><summary><b>Answer</b></summary>
+
+.......
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 28
+</details>
+
+### Theorical Question 6
+
+Do you know what sending messages in Fire-and-forget mean ?
+
+<details><summary><b>Answer</b></summary>
+
+We send a message to the server and don’t really care if it arrives succesfully or
+not. Most of the time, it will arrive successfully, since Kafka is highly available
+and the producer will retry sending messages automatically. However, some mes‐
+sages will get lost using this method.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 45 
+</details>
+
+### Theorical Question 7
+
+Do you know what Synchronous send and Asynchronous send mean ?
+
+<details><summary><b>Answer</b></summary>
+
+Synchronous send: We send a message, the send() method returns a Future object, and we use ge()
+to wait on the future and see if the send() was successful or not.
+
+Asynchronous send: We call the send() method with a callback function, which gets triggered when it receives a response from the Kafka broker.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 45 
+</details>
+
+### Theorical Question 8
+
+Do you know what acks are ?
+
+<details><summary><b>Answer</b></summary>
+
+The acks parameter controls how many partition replicas must receive the record
+before the producer can consider the write successful. This option has a significant
+impact on how likely messages are to be lost. There are three allowed values for the
+acks parameter:
+
+If acks=0 , the producer will not wait for a reply from the broker before assuming
+the message was sent successfully. This means that if something went wrong and the broker did not receive the message, the producer will not know about it and
+the message will be lost. However, because the producer is not waiting for any
+response from the server, it can send messages as fast as the network will support,
+so this setting can be used to achieve very high throughput.
+
+If acks=1 , the producer will receive a success response from the broker the
+moment the leader replica received the message. If the message can’t be written
+to the leader (e.g., if the leader crashed and a new leader was not elected yet), the
+producer will receive an error response and can retry sending the message,
+avoiding potential loss of data. The message can still get lost if the leader crashes
+and a replica without this message gets elected as the new leader (via unclean
+leader election). In this case, throughput depends on whether we send messages
+synchronously or asynchronously. If our client code waits for a reply from the
+server (by calling the get() method of the Future object returned when sending
+a message) it will obviously increase latency significantly (at least by a network
+roundtrip). If the client uses callbacks, latency will be hidden, but throughput will
+be limited by the number of in-flight messages (i.e., how many messages the pro‐
+ducer will send before receiving replies from the server).
+
+If acks=all , the producer will receive a success response from the broker once all
+in-sync replicas received the message. This is the safest mode since you can make
+sure more than one broker has the message and that the message will survive
+even in the case of crash (more information on this in Chapter 5). However, the
+latency we discussed in the acks=1 case will be even higher, since we will be wait‐
+ing for more than just one broker to receive the message.
+
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 45 
+</details>
+
+
+### Theorical Question 8
+
+Do you understand why we use Apache Avro along with kafka ?
+
+<details><summary><b>Answer</b></summary>
+
+Apache Avro is a language-neutral data serialization format. The project was created
+by Doug Cutting to provide a way to share data files with a large audience.
+
+Avro data is described in a language-independent schema. The schema is usually
+described in JSON and the serialization is usually to binary files, although serializing
+to JSON is also supported. Avro assumes that the schema is present when reading and
+writing files, usually by embedding the schema in the files themselves.
+
+One of the most interesting features of Avro, and what makes it a good fit for use in a
+messaging system like Kafka, is that when the application that is writing messages
+switches to a new schema, the applications reading the data can continue processing
+messages without requiring any change or update.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 54
+</details>
