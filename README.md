@@ -280,6 +280,11 @@ it does not retry is that by the time commitAsync() receives a response from the
 server, there may have been a later commit that was already successful. Imagine that
 we sent a request to commit offset 2000.
 
+A simple pattern to get commit order right for asynchronous retries is to use a monotonically increasing sequence number. Increase the sequence number every time you commit and add the
+sequence number at the time of the commit to the commitAsync callback. When you’re getting ready to send a retry, check if the commit sequence number the callback got is equal to the instance variable;
+ 
+if it is, there was no newer commit and it is safe to retry. If the instance sequence number is higher, don’t retry because a newer commit was already sent.
+
 </details>
 
 <details><summary><b>Source</b></summary>
