@@ -251,3 +251,37 @@ __consumer_offsets topic, with the committed offset for each partition.
 <details><summary><b>Source</b></summary>
 kafka the definitive guide 1st Edition Pag 75
 </details>
+
+### Theorical Question 12
+
+Do you understand the difference between commitSync() and commitAsync() ?
+
+<details><summary><b>Answer</b></summary>
+
+By setting auto.commit.offset=false , offsets will only be committed when the
+application explicitly chooses to do so. The simplest and most reliable of the commit
+APIs is commitSync() . This API will commit the latest offset returned by poll() and
+return once the offset is committed, throwing an exception if commit fails for some
+reason.
+
+It is important to remember that commitSync() will commit the latest offset returned
+by poll() , so make sure you call commitSync() after you are done processing all the
+records in the collection, or you risk missing messages as described previously. When
+rebalance is triggered, all the messages from the beginning of the most recent batch
+until the time of the rebalance will be processed twice.
+
+One drawback of manual commit is that the application is blocked until the broker
+responds to the commit request. This will limit the throughput of the application.
+Throughput can be improved by committing less frequently, but then we are increas‐
+ing the number of potential duplicates that a rebalance will create.
+
+The drawback is that while commitSync() will retry the commit until it either succeeds or encounters a nonretriable failure, commitAsync() will not retry. The reason
+it does not retry is that by the time commitAsync() receives a response from the
+server, there may have been a later commit that was already successful. Imagine that
+we sent a request to commit offset 2000.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 101
+</details>
