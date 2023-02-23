@@ -195,7 +195,7 @@ kafka the definitive guide 1st Edition Pag 45
 </details>
 
 
-### Theorical Question 8
+### Theorical Question 9
 
 Do you understand why we use Apache Avro along with kafka ?
 
@@ -218,4 +218,36 @@ messages without requiring any change or update.
 
 <details><summary><b>Source</b></summary>
 kafka the definitive guide 1st Edition Pag 54
+</details>
+
+### Theorical Question 10
+
+Do you understand what is poll ?
+
+<details><summary><b>Answer</b></summary>
+
+![Image](img/pollFunction.png "pollFunction")
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 54
+</details>
+
+### Theorical Question 11
+
+Do you know what a commit is ?
+
+<details><summary><b>Answer</b></summary>
+
+allows consumers to use Kafka to track their position (offset) in each partition.
+We call the action of updating the current position in the partition a commit.
+
+How does a consumer commit an offset? It produces a message to Kafka, to a special
+__consumer_offsets topic, with the committed offset for each partition.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 75
 </details>
