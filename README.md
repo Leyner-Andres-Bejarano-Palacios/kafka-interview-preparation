@@ -290,3 +290,54 @@ if it is, there was no newer commit and it is safe to retry. If the instance seq
 <details><summary><b>Source</b></summary>
 kafka the definitive guide 1st Edition Pag 101
 </details>
+
+### Theorical Question 12
+
+How do you check in zookeper that brokers are added or removed ?
+
+<details><summary><b>Answer</b></summary>
+
+In /brokers/ids path in Zookeeper where brokers are registered so they get notified when brokers are added or removed.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 101
+</details>
+
+### Theorical Question 13
+
+The amount of time a topic follower can be inactive or behind (of the topic leader)before it is considered out of
+sync is controlled by the __________
+
+<details><summary><b>Answer</b></summary>
+
+replica.lag.time.max.ms
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 101
+</details>
+
+
+### Theorical Question 14
+
+Do you understand what compactation mean in kafka ? 
+
+<details><summary><b>Answer</b></summary>
+
+Every time the state changes, the application
+writes the new state into Kafka. When recovering from a crash, the application reads
+those messages from Kafka to recover its latest state. In this case, it only cares about
+the latest state before the crash, not all the changes that occurred while it was run‐
+ning.
+Kafka supports such use cases by allowing the retention policy on a topic to be delete,
+which deletes events older than retention time, to compact, which only stores the
+most recent value for each key in the topic.
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 101
+</details>
