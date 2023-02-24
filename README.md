@@ -341,3 +341,35 @@ most recent value for each key in the topic.
 <details><summary><b>Source</b></summary>
 kafka the definitive guide 1st Edition Pag 101
 </details>
+
+### Theorical Question 15
+
+Do you understand what is an ELT and a ETL ? 
+
+<details><summary><b>Answer</b></summary>
+
+ETL, which stands for Extract-
+Transform-Load, means the data pipeline is responsible for making modifications to
+the data as it passes through. It has the perceived benefit of saving time and storage
+because you don’t need to store the data, modify it, and store it again. Depending on
+the transformations, this benefit is sometimes real but sometimes shifts the burden of
+computation and storage to the data pipeline itself, which may or may not be desirable. The main drawback of this approach is that the transformations that happen to
+the data in the pipeline tie the hands of those who wish to process the data farther
+down the pipe.
+
+ELT stands for Extract-Load-Transform and means the data pipeline does only mini‐
+mal transformation (mostly around data type conversion), with the goal of making
+sure the data that arrives at the target is as similar as possible to the source data.
+These are also called high-fidelity pipelines or data-lake architecture. In these sys‐
+tems, the target system collects “raw data” and all required processing is done at the
+target system. The benefit here is that the system provides maximum flexibility to
+users of the target system, since they have access to all the data. These systems also
+tend to be easier to troubleshoot since all data processing is limited to one system
+rather than split between the pipeline and additional applications. The drawback is
+that the transformations take CPU and storage resources at the target system
+
+</details>
+
+<details><summary><b>Source</b></summary>
+kafka the definitive guide 1st Edition Pag 101
+</details>
